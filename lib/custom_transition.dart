@@ -43,7 +43,7 @@ class CustomAnimatedRoute {
             case RouteAnimationType.fade:
               return creatfateRoute(context, animation, secondaryAnimation,
                   child, duration, curve);
-            case RouteAnimationType.circularReveal:
+           case RouteAnimationType.circularReveal:
               return CircularRevealAnimation(
                 animation: animation,
                 curve: curve,
@@ -58,9 +58,9 @@ class CustomAnimatedRoute {
             case RouteAnimationType.scaleRotate:
               return creatScaleRotateRoute(context, animation,
                   secondaryAnimation, child, duration, curve, secondarycurve);
-            case RouteAnimationType.zoomcircle:
+          /*  case RouteAnimationType.zoomcircle:
               return creatZoomcircleRoute(context, animation,
-                  secondaryAnimation, child, duration, curve);
+                  secondaryAnimation, child, duration, curve);*/
 
             default:
               return child;
@@ -223,7 +223,7 @@ Widget creatsizedRoute(
     child: child,
   );
 }
-
+/*
 Widget creatZoomcircleRoute(
   context,
   animation,
@@ -253,7 +253,7 @@ Widget creatZoomcircleRoute(
     ),
   );
 }
-
+*/
 Widget creatScaleRotateRoute(
   context,
   animation,
@@ -329,7 +329,7 @@ enum RouteAnimationType {
   scale, // Example: Scale
   rotate, // Example: Rotation
   zoom, // Example: Size
-  zoomcircle, // Example: Size
+  //zoomcircle, // Example: Size
   none,
   circularReveal,
 }
