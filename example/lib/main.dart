@@ -10,119 +10,119 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+    return  MaterialApp(
+      title: 'Custom Animated Route Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      initialRoute: '/',
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case '/second':
+            final RouteAnimationType animationType = settings.arguments as RouteAnimationType;
+            return PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) => SecondPage(),
+              transitionsBuilder: animatedTransition(animationType),
+              transitionDuration:const  Duration(milliseconds: 300),
+              reverseTransitionDuration:const Duration(milliseconds: 300),
+            );
+          default:
+            return null;
+        }
+      },
+      routes: {
+        '/': (context) => HomeScreen(),
+      },
     );
   }
 }
 
 /// Example page
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue,
-      appBar: AppBar(
-        title: const Text('Page Transition'),
-      ),
-      body: Center(
-        child: ListView(
-          children: <Widget>[
-            ElevatedButton(
-              child: const Text('Fade Second Page - Default'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SecondPage(),
-                  ),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Left To Right Transition Second Page'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CustomAnimatedRoute.animatedroute(const SecondPage(),
-                      animationType: RouteAnimationType.leftToRight
-                      // type: PageTransitionType.leftToRight,
+    final Map<RouteAnimationType, String> animationMap = {
+      RouteAnimationType.leftToRight: 'Left to Right Transition',
+      RouteAnimationType.fade: 'Fade Transition',
+      RouteAnimationType.rightToLeft: 'Right to Left Transition',
+      RouteAnimationType.bottomToTop: 'Bottom to Top Transition',
+      RouteAnimationType.topToBottom: 'Top to Bottom Transition',
+      RouteAnimationType.scale: 'Scale Transition',
+      RouteAnimationType.zoom: 'Zoom Transition',
+      RouteAnimationType.circularReveal: 'Circular Reveal Transition',
+      RouteAnimationType.none: 'No Transition',
+      RouteAnimationType.rotate: 'Rotate Transition',
+      RouteAnimationType.scaleRotate: 'Scale Rotate Transition',
+      // Add other transitions as needed
+    };
 
-                      ),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text(
-                  'Right To Left Transition Second Page Ios SwipeBack'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CustomAnimatedRoute.animatedroute(
-                    const SecondPage(),
-                    animationType: RouteAnimationType.rightToLeft,
-                  ),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text('scale Transition Second Page'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CustomAnimatedRoute.animatedroute(
-                    const SecondPage(),
-                    animationType: RouteAnimationType.scale,
-                  ),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text('scale with rotate Transition Second Page'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CustomAnimatedRoute.animatedroute(
-                    const SecondPage(),
-                    animationType: RouteAnimationType.circularReveal,
-                  ),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Scale Transition Second Page'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CustomAnimatedRoute.animatedroute(
-                    const SecondPage(),
-                    animationType: RouteAnimationType.scale,
-                    duration: const Duration(milliseconds: 400),
-                  ),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Rotate Transition Second Page'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CustomAnimatedRoute.animatedroute(
-                    const SecondPage(),
-                    curve: Curves.bounceOut,
-                    animationType: RouteAnimationType.rotate,
-                  ),
-                );
-              },
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home Screen'),
+      ),
+      body: Expanded(
+        child: ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: animationMap.length+2,
+          itemBuilder: (context, index) {
+          
+if(index==animationMap.length){
+  return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                     '/second',
+                      arguments:  RouteAnimationType.leftToRight,
+
+                  );
+                },
+                child: Text('navigate by name'),
+              ),
+            );
+}
+else if(index==animationMap.length+1){
+  return  Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => SecondPage(),
+                      transitionsBuilder: animatedTransition(RouteAnimationType.rotate,curve: Curves.easeInOutBack),
+                      transitionDuration: const Duration(milliseconds: 800),
+                      reverseTransitionDuration: const Duration(milliseconds: 800),
+                    ),
+                  );
+                },
+                child: Text("with curve"),
+              ),
+            );
+}
+  final animationType = animationMap.keys.elementAt(index);
+            final animationLabel = animationMap.values.elementAt(index);
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => SecondPage(),
+                      transitionsBuilder: animatedTransition(animationType,curve: Curves.linear),
+                      transitionDuration: const Duration(milliseconds: 800),
+                      reverseTransitionDuration: const Duration(milliseconds: 800),
+                    ),
+                  );
+                },
+                child: Text(animationLabel),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -140,6 +140,7 @@ class SecondPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments;
     return Scaffold(
+      backgroundColor: Colors.greenAccent,
       appBar: AppBar(
         title: Text(args.toString()),
       ),

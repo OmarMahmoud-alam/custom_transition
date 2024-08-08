@@ -1,4 +1,4 @@
-library custom_transition;
+/*library custom_transition;
 
 import 'package:custom_transition/revelcircle.dart';
 import 'package:flutter/material.dart';
@@ -8,52 +8,74 @@ import 'package:flutter/material.dart';
 /// Duration is the duration of page transition
 /// it better to be in multi page so fell free to clean the code
 ///
-   Widget Function(BuildContext, Animation<double>, Animation<double>, Widget) animatedTransition(
-    RouteAnimationType animationType, {
-    Curve curve = Curves.elasticInOut,
-    Curve secondaryCurve = Curves.fastOutSlowIn, // use only for route scale
+class CustomAnimatedRoute {
+  static PageRouteBuilder<dynamic> animatedroute(
+    Widget screen, {
+    required RouteAnimationType animationType,
+    duration = const Duration(milliseconds: 300),
+    curve = Curves.elasticInOut,
+    secondarycurve = Curves.fastOutSlowIn, //use only for routescale
   }) {
-    return (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-      switch (animationType) {
-        case RouteAnimationType.leftToRight:
-          return leftToRight(context, animation, child,   curve);
-        case RouteAnimationType.rightToLeft:
-          return rightToLeft(context, animation, secondaryAnimation, child,   curve);
-        case RouteAnimationType.bottomToTop:
-          return bottomToTop(context, animation, secondaryAnimation, child,   curve);
-        case RouteAnimationType.topToBottom:
-          return topToBottom(context, animation, secondaryAnimation, child,   curve);
-        case RouteAnimationType.scale:
-          return createScaleRoute(context, animation, secondaryAnimation, child,   curve);
-        case RouteAnimationType.zoom:
-          return createScaleRoute(context, animation, secondaryAnimation, child,   curve);
-        case RouteAnimationType.fade:
-          return createFadeRoute(context, animation, secondaryAnimation, child,   curve);
-        case RouteAnimationType.circularReveal:
-          return CircularRevealAnimation(
-            animation: animation,
-            curve: curve,
-            child: child,
-          );
-        case RouteAnimationType.none:
-          return child; 
-        case RouteAnimationType.rotate:
-          return createRotateRoute(context, animation, secondaryAnimation, child,   curve);
-        case RouteAnimationType.scaleRotate:
-          return createScaleRotateRoute(context, animation, secondaryAnimation, child,   curve, secondaryCurve);
-        /*case RouteAnimationType.zoomcircle:
-          return createZoomCircleRoute(context, animation, secondaryAnimation, child,   curve);*/
-        default:
-          return child;
-      }
-    };
-  }
-// Creates a slide transition that slides the child widget from left to right based on the provided animation, secondaryAnimation,   and curve.
+    return PageRouteBuilder(
+        transitionDuration: duration,
+        reverseTransitionDuration: duration,
+        pageBuilder: (context, animation, secondaryAnimation) => screen,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          switch (animationType) {
+            case RouteAnimationType.leftToRight:
+              return lefttoright(context, animation, secondaryAnimation, child,
+                  duration, curve);
+            case RouteAnimationType.rightToLeft:
+              return righttoleft(context, animation, secondaryAnimation, child,
+                  duration, curve);
+            case RouteAnimationType.bottomToTop:
+              return bottomtotop(context, animation, secondaryAnimation, child,
+                  duration, curve);
+            case RouteAnimationType.topToBottom:
+              return toptobottom(context, animation, secondaryAnimation, child,
+                  duration, curve);
+            case RouteAnimationType.scale:
+              return creatScaleRoute(context, animation, secondaryAnimation,
+                  child, duration, curve);
+            case RouteAnimationType.zoom:
+              return creatScaleRoute(context, animation, secondaryAnimation,
+                  child, duration, curve);
+            case RouteAnimationType.fade:
+              return creatfateRoute(context, animation, secondaryAnimation,
+                  child, duration, curve);
+           case RouteAnimationType.circularReveal:
+              return CircularRevealAnimation(
+                animation: animation,
+                curve: curve,
+                child: child,
+              );
 
-Widget leftToRight(
+            case RouteAnimationType.none:
+              return child; 
+            case RouteAnimationType.rotate:
+              return creatrotateRoute(context, animation, secondaryAnimation,
+                  child, duration, curve);
+            case RouteAnimationType.scaleRotate:
+              return creatScaleRotateRoute(context, animation,
+                  secondaryAnimation, child, duration, curve, secondarycurve);
+          /*  case RouteAnimationType.zoomcircle:
+              return creatZoomcircleRoute(context, animation,
+                  secondaryAnimation, child, duration, curve);*/
+
+            default:
+              return child;
+          }
+        });
+  }
+}
+// Creates a slide transition that slides the child widget from left to right based on the provided animation, secondaryAnimation, duration, and curve.
+
+Widget lefttoright(
   context,
   animation,
+  secondaryAnimation,
   child,
+  duration,
   curve,
 ) {
   const begin = Offset(-1.0, 0.0);
@@ -67,12 +89,12 @@ Widget leftToRight(
 }
 
 // Function for creating a SlideTransition with a given animation, position, and child widget.
-Widget rightToLeft(
+Widget righttoleft(
   context,
   animation,
   secondaryAnimation,
   child,
- 
+  duration,
   curve,
 ) {
   const begin = Offset(1.0, 0.0);
@@ -84,14 +106,14 @@ Widget rightToLeft(
     child: child,
   );
 }
-// Creates a SlideTransition that moves the child widget from the top to the bottom using the given animation, secondaryAnimation,   and curve.
+// Creates a SlideTransition that moves the child widget from the top to the bottom using the given animation, secondaryAnimation, duration, and curve.
 
-Widget topToBottom(
+Widget toptobottom(
   context,
   animation,
   secondaryAnimation,
   child,
- 
+  duration,
   curve,
 ) {
   const begin = Offset(0.0, 1.0);
@@ -104,12 +126,12 @@ Widget topToBottom(
   );
 }
 
-Widget bottomToTop(
+Widget bottomtotop(
   context,
   animation,
   secondaryAnimation,
   child,
- 
+  duration,
   curve,
 ) {
   const begin = Offset(0.0, -1.0);
@@ -122,12 +144,12 @@ Widget bottomToTop(
   );
 }
 
-Widget createScaleRoute(
+Widget creatScaleRoute(
   context,
   animation,
   secondaryAnimation,
   child,
- 
+  duration,
   curve,
 ) {
   return ScaleTransition(
@@ -144,12 +166,12 @@ Widget createScaleRoute(
   );
 }
 
-Widget createRotateRoute(
+Widget creatrotateRoute(
   context,
   animation,
   secondaryAnimation,
   child,
- 
+  duration,
   curve,
 ) {
   return RotationTransition(
@@ -166,12 +188,12 @@ Widget createRotateRoute(
   );
 }
 
-Widget createFadeRoute(
+Widget creatfateRoute(
   context,
   animation,
   secondaryAnimation,
   child,
- 
+  duration,
   curve,
 ) {
   Animation<double> opacityAnimation = CurvedAnimation(
@@ -189,7 +211,7 @@ Widget creatsizedRoute(
   animation,
   secondaryAnimation,
   child,
- 
+  duration,
   curve,
 ) {
   Animation<double> opacityAnimation = CurvedAnimation(
@@ -207,7 +229,7 @@ Widget creatZoomcircleRoute(
   animation,
   secondaryAnimation,
   child,
- 
+  duration,
   curve,
 ) {
   const begin = Offset(0, 0); // Center of the screen
@@ -232,12 +254,12 @@ Widget creatZoomcircleRoute(
   );
 }
 */
-Widget createScaleRotateRoute(
+Widget creatScaleRotateRoute(
   context,
   animation,
   secondaryAnimation,
   child,
- 
+  duration,
   curve,
   secondarycurve,
 ) {
@@ -311,3 +333,4 @@ enum RouteAnimationType {
   none,
   circularReveal,
 }
+*/

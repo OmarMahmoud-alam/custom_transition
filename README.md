@@ -18,12 +18,18 @@ know whether this package might be useful for them.
 
 ## Features
 
-you can make a lot of transition like: ,
-    leftToRight,
-    RightToLeft,
-    Scale,
-    ScaleRotate,
-    circleshape ,
+
+- **Slide Animations**: 
+  - `leftToRight`
+  - `rightToLeft`
+  - `bottomToTop`
+  - `topToBottom`
+- **Fade Animation**: Smooth fade transition between pages.
+- **Scale Animation**: Zoom in/out effect during page transition.
+- **Rotate Animation**: Rotate the page while transitioning.
+- **ScaleRotate Animation**: Combine scaling and rotating for a dynamic effect.
+- **Circular Reveal Animation**: Reveal the next screen in a circular fashion.
+- **None**: No animation, just a direct transition.
 
 ## Getting started
 
@@ -31,8 +37,7 @@ this package not need any editing
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+i will give an example.
 
 ```dart
 //you can add duration or use any curve all the animation work with curve
