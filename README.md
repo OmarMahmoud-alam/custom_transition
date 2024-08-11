@@ -15,25 +15,38 @@ and the Flutter guide for
 this package is use to make animated transition between page this is first version,
  I will add other transition soon
 know whether this package might be useful for them.
+/*
+# CustomAnimatedRoute
+
+**CustomAnimatedRoute** is a Flutter package designed to provide a variety
+of animated transitions between pages. This is the first version, and more
+animations will be added in future updates.
 
 ## Features
 
+- **Slide Animations**:
+  - **leftToRight**: Transition the page from left to right, creating a smooth sliding effect.
+  - **rightToLeft**: Transition the page from right to left, commonly used for navigation between screens.
+  - **bottomToTop**: Transition the page from bottom to top, ideal for modals or screens that should slide up.
+  - **topToBottom**: Transition the page from top to bottom, useful for dismissing screens by sliding them down.
+  - **Fade Animation**: Provides a smooth fade transition between pages, ideal for subtle changes between content.
+  - **Scale Animation**: Creates a zoom in/out effect during page transition, providing a focus on the new screen as it appears.
+  - **Rotate Animation**: Rotates the page while transitioning, adding a dynamic and attention-grabbing effect.
+  - **ScaleRotate Animation**: Combines scaling and rotating for a more complex and engaging transition, perfect for creative interfaces.
+  - **Circular Reveal Animation**: Reveals the next screen in a circular fashion, often used to highlight specific areas or actions.
+  - **None**: Direct transition with no animation, allowing instant page changes without any visual effects.
 
-- **Slide Animations**: 
-  - `leftToRight`
-  - `rightToLeft`
-  - `bottomToTop`
-  - `topToBottom`
-- **Fade Animation**: Smooth fade transition between pages.
-- **Scale Animation**: Zoom in/out effect during page transition.
-- **Rotate Animation**: Rotate the page while transitioning.
-- **ScaleRotate Animation**: Combine scaling and rotating for a dynamic effect.
-- **Circular Reveal Animation**: Reveal the next screen in a circular fashion.
-- **None**: No animation, just a direct transition.
+## Getting Started
 
-## Getting started
+This package is straightforward to use and does not require any additional setup.
+Simply add it to your project and start using the provided animations to enhance your app's user experience.
 
-this package not need any editing
+To install the package, add the following line to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  custom_animated_route: ^1.0.0
+ ```
 
 ## Usage
 
@@ -41,15 +54,27 @@ i will give an example.
 
 ```dart
 //you can add duration or use any curve all the animation work with curve
-                 Navigator.push(
-                  context,
-                  CustomAnimatedRoute.animatedroute(
-                    const SecondPage(),
-                    curve: Curves.bounceOut,
-                    animationType: RouteAnimationType.rotate,
-                  ),
-                );
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => SecondPage(),
+                      transitionsBuilder: animatedTransition(RouteAnimationType.rotate,),
+                    ),
+                  );
                 
+            Navigator.push(
+            context,
+            PageRouteBuilder(
+           pageBuilder: (context, animation, secondaryAnimation) => AnotherPage(),
+           transitionsBuilder: animatedTransition(
+               RouteAnimationType.scaleRotate,
+               curve: Curves.bounceInOut,
+               secondaryCurve: Curves.easeInOut,
+             ),
+          transitionDuration: const Duration(milliseconds: 800),
+          reverseTransitionDuration: const Duration(milliseconds: 800),
+            ),
+          );    
               
 
 ```

@@ -1,7 +1,6 @@
 name: custom_transition
 description: "A flutter that help you to make transition easy."
-version: 0.0.1
-author: Omar Mahmoud
+version: 0.1.0
 homepage: https://github.com/OmarMahmoud-alam/custom_transition
 
 environment:

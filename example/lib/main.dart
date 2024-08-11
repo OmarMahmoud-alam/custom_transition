@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           case '/second':
             final RouteAnimationType animationType = settings.arguments as RouteAnimationType;
             return PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => SecondPage(),
+              pageBuilder: (context, animation, secondaryAnimation) => const SecondPage(),
               transitionsBuilder: animatedTransition(animationType),
               transitionDuration:const  Duration(milliseconds: 300),
               reverseTransitionDuration:const Duration(milliseconds: 300),
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         }
       },
       routes: {
-        '/': (context) => HomeScreen(),
+        '/': (context) => const HomeScreen(),
       },
     );
   }
@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Screen'),
+        title: const Text('Home Screen'),
       ),
       body: Expanded(
         child: ListView.builder(
@@ -80,7 +80,7 @@ if(index==animationMap.length){
 
                   );
                 },
-                child: Text('navigate by name'),
+                child: const Text('navigate by name'),
               ),
             );
 }
@@ -92,14 +92,14 @@ else if(index==animationMap.length+1){
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => SecondPage(),
+                      pageBuilder: (context, animation, secondaryAnimation) => const SecondPage(),
                       transitionsBuilder: animatedTransition(RouteAnimationType.rotate,curve: Curves.easeInOutBack),
                       transitionDuration: const Duration(milliseconds: 800),
                       reverseTransitionDuration: const Duration(milliseconds: 800),
                     ),
                   );
                 },
-                child: Text("with curve"),
+                child: const Text("with curve"),
               ),
             );
 }
@@ -112,7 +112,7 @@ else if(index==animationMap.length+1){
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => SecondPage(),
+                      pageBuilder: (context, animation, secondaryAnimation) => const SecondPage(),
                       transitionsBuilder: animatedTransition(animationType,curve: Curves.linear),
                       transitionDuration: const Duration(milliseconds: 800),
                       reverseTransitionDuration: const Duration(milliseconds: 800),
